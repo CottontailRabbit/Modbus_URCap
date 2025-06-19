@@ -28,13 +28,13 @@ jobs:
           ./build-urcap.sh
 
       - name: Upload .jar Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: urcap-jar
           path: target/*.jar
 
       - name: Upload .urcap Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: urcap-zip
           path: target/*.urcap
