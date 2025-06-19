@@ -1,0 +1,40 @@
+name: Build URCap (jar + urcap)
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v3
+
+      - name: Build .jar using URCap SDK Docker
+        run: |
+          docker run --rm \
+            -v ${{ github.workspace }}:/workspace \
+            -w /workspace \
+            mohamedghita/build:urcap_java_build \
+            mvn clean install
+
+      - name: Create .urcap package
+        run: |
+          chmod +x build-urcap.sh
+          ./build-urcap.sh
+
+      - name: Upload .jar Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: urcap-jar
+          path: target/*.jar
+
+      - name: Upload .urcap Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: urcap-zip
+          path: target/*.urcap
