@@ -14,45 +14,32 @@ jobs:
       - name: Checkout source
         uses: actions/checkout@v3
 
-      - name: Show directory structure
+      - name: Debug: Show pom.xml 경로
         run: |
-          echo "🔍 현재 경로 구조 확인:"
-          ls -R ${{ github.workspace }}
-
-          echo "📂 Modbus_URCap 내부:"
-          ls -R ${{ github.workspace }}/Modbus_URCap
-
-          echo "📁 com.ur.thph.modbus_urcap 내부:"
-          ls -R ${{ github.workspace }}/Modbus_URCap/com.ur.thph.modbus_urcap
-
-          echo "📄 pom.xml 존재 여부:"
-          if [ -f "${{ github.workspace }}/Modbus_URCap/com.ur.thph.modbus_urcap/pom.xml" ]; then
-            echo "✅ pom.xml 있음"
-          else
-            echo "❌ pom.xml 없음!"
-          fi
+          echo "📄 pom.xml 위치 확인:"
+          ls -l ${{ github.workspace }}/com.ur.thph.modbus_urcap/pom.xml
 
       - name: Build .jar using URCap SDK Docker
         run: |
           docker run --rm \
-            -v ${{ github.workspace }}/Modbus_URCap/com.ur.thph.modbus_urcap:/workspace \
+            -v ${{ github.workspace }}/com.ur.thph.modbus_urcap:/workspace \
             -w /workspace \
             mohamedghita/build:urcap_java_build \
             mvn clean install
 
       - name: Create .urcap package
         run: |
-          chmod +x Modbus_URCap/com.ur.thph.modbus_urcap/build-urcap.sh
-          ./Modbus_URCap/com.ur.thph.modbus_urcap/build-urcap.sh
+          chmod +x ${{ github.workspace }}/com.ur.thph.modbus_urcap/build-urcap.sh
+          ${{ github.workspace }}/com.ur.thph.modbus_urcap/build-urcap.sh
 
       - name: Upload .jar Artifact
         uses: actions/upload-artifact@v4
         with:
           name: urcap-jar
-          path: Modbus_URCap/com.ur.thph.modbus_urcap/target/*.jar
+          path: com.ur.thph.modbus_urcap/target/*.jar
 
       - name: Upload .urcap Artifact
         uses: actions/upload-artifact@v4
         with:
           name: urcap-zip
-          path: Modbus_URCap/com.ur.thph.modbus_urcap/target/*.urcap
+          path: com.ur.thph.modbus_urcap/target/*.urcap
