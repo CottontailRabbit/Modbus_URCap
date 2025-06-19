@@ -17,7 +17,7 @@ jobs:
       - name: Build .jar using URCap SDK Docker
         run: |
           docker run --rm \
-            -v ${{ github.workspace }}:/workspace \
+            -v ${{ github.workspace }}/Modbus_URCap/com.ur.thph.modbus_urcap:/workspace \
             -w /workspace \
             mohamedghita/build:urcap_java_build \
             mvn clean install
