@@ -13,6 +13,24 @@ jobs:
     steps:
       - name: Checkout source
         uses: actions/checkout@v3
+        
+      - name: Debug: Show directory structure
+          run: |
+            echo "🔍 현재 경로 구조 확인:"
+            ls -R ${{ github.workspace }}
+        
+            echo "📂 Modbus_URCap 내부:"
+            ls -R ${{ github.workspace }}/Modbus_URCap
+        
+            echo "📁 com.ur.thph.modbus_urcap 내부:"
+            ls -R ${{ github.workspace }}/Modbus_URCap/com.ur.thph.modbus_urcap
+        
+            echo "📄 pom.xml 존재 여부:"
+            if [ -f "${{ github.workspace }}/Modbus_URCap/com.ur.thph.modbus_urcap/pom.xml" ]; then
+              echo "✅ pom.xml 있음"
+            else
+              echo "❌ pom.xml 없음!"
+            fi
 
       - name: Build .jar using URCap SDK Docker
         run: |
