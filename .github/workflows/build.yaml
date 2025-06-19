@@ -13,18 +13,18 @@ jobs:
     steps:
       - name: Checkout source
         uses: actions/checkout@v3
-        
-      - name: Debug: Show directory structure
+
+      - name: Show directory structure
         run: |
           echo "🔍 현재 경로 구조 확인:"
           ls -R ${{ github.workspace }}
-      
+
           echo "📂 Modbus_URCap 내부:"
           ls -R ${{ github.workspace }}/Modbus_URCap
-      
+
           echo "📁 com.ur.thph.modbus_urcap 내부:"
           ls -R ${{ github.workspace }}/Modbus_URCap/com.ur.thph.modbus_urcap
-      
+
           echo "📄 pom.xml 존재 여부:"
           if [ -f "${{ github.workspace }}/Modbus_URCap/com.ur.thph.modbus_urcap/pom.xml" ]; then
             echo "✅ pom.xml 있음"
@@ -42,17 +42,17 @@ jobs:
 
       - name: Create .urcap package
         run: |
-          chmod +x build-urcap.sh
-          ./build-urcap.sh
+          chmod +x Modbus_URCap/com.ur.thph.modbus_urcap/build-urcap.sh
+          ./Modbus_URCap/com.ur.thph.modbus_urcap/build-urcap.sh
 
       - name: Upload .jar Artifact
         uses: actions/upload-artifact@v4
         with:
           name: urcap-jar
-          path: target/*.jar
+          path: Modbus_URCap/com.ur.thph.modbus_urcap/target/*.jar
 
       - name: Upload .urcap Artifact
         uses: actions/upload-artifact@v4
         with:
           name: urcap-zip
-          path: target/*.urcap
+          path: Modbus_URCap/com.ur.thph.modbus_urcap/target/*.urcap
