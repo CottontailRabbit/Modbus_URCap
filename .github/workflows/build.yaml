@@ -14,7 +14,7 @@ jobs:
       - name: Checkout source
         uses: actions/checkout@v3
 
-      - name: Debug Show pom.xml path
+      - name: Debug: Show pom.xml path
         run: |
           echo "📄 pom.xml 위치 확인:"
           ls -l ${{ github.workspace }}/com.ur.thph.modbus_urcap/pom.xml
@@ -30,17 +30,20 @@ jobs:
       - name: Create .urcap package (no script)
         run: |
           cd com.ur.thph.modbus_urcap
-          mkdir -p target/urcap_tmp
+
+          mkdir -p urcap_tmp
 
           echo "📦 파일 복사"
-          cp target/Modbus_URCap-1.0.0.jar target/urcap_tmp/ || true
-          cp -r daemon target/urcap_tmp/ 2>/dev/null || true
-          cp src/main/resources/urcap.xml target/urcap_tmp/ 2>/dev/null || true
+          cp target/Modbus_URCap-1.0.0.jar urcap_tmp/ || true
+          cp -r daemon urcap_tmp/ 2>/dev/null || true
+          cp src/main/resources/urcap.xml urcap_tmp/ 2>/dev/null || true
 
           echo "📦 zip 압축"
-          cd target/urcap_tmp
-          zip -r ../Modbus_URCap-1.0.0.urcap * > /dev/null
-          cd ../..
+          cd urcap_tmp
+          zip -r ../target/Modbus_URCap-1.0.0.urcap * > /dev/null
+          cd ..
+          rm -rf urcap_tmp
+
           echo "✅ .urcap 파일 생성 완료"
 
       - name: Upload .jar Artifact
