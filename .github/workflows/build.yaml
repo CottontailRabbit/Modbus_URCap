@@ -34,13 +34,13 @@ jobs:
           mkdir -p urcap_tmp
 
           echo "📦 파일 복사"
-          cp target/Modbus_URCap-1.0.0.jar urcap_tmp/ || true
+          cp target/modbus_URCap-1.0.0.jar urcap_tmp/ || true
           cp -r daemon urcap_tmp/ 2>/dev/null || true
           cp src/main/resources/urcap.xml urcap_tmp/ 2>/dev/null || true
 
           echo "📦 zip 압축"
           cd urcap_tmp
-          zip -r ../target/Modbus_URCap-1.0.0.urcap * > /dev/null
+          zip -r ../target/modbus_URCap-1.0.0.urcap * > /dev/null
           cd ..
           rm -rf urcap_tmp
 
