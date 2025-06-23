@@ -27,6 +27,9 @@ jobs:
             mohamedghita/build:urcap_java_build \
             mvn clean install
 
+      - name: List build output
+        run: ls -al com.ur.thph.modbus_urcap/target
+
       - name: Create .urcap package (no script)
         run: |
           cd com.ur.thph.modbus_urcap
@@ -34,7 +37,7 @@ jobs:
           mkdir -p urcap_tmp
 
           echo "📦 파일 복사"
-          cp target/modbus_URCap-1.0.0.jar urcap_tmp/ || true
+          cp target/*.jar urcap_tmp/ || true
           cp -r daemon urcap_tmp/ 2>/dev/null || true
           cp src/main/resources/urcap.xml urcap_tmp/ 2>/dev/null || true
 
