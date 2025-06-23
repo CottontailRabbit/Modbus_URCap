@@ -43,7 +43,7 @@ jobs:
 
           echo "📦 zip 압축"
           cd urcap_tmp
-          zip -r ../target/modbus_URCap-1.0.0.urcap * > /dev/null
+          zip -r ../target/modbus_urcap-1.0.urcap * > /dev/null
           cd ..
           rm -rf urcap_tmp
 
