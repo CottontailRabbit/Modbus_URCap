@@ -14,7 +14,7 @@ jobs:
       - name: Checkout source
         uses: actions/checkout@v3
 
-      - name: Debug: Show pom.xml path
+      - name: Debug Show pom.xml path
         run: |
           echo "📄 pom.xml 위치 확인:"
           ls -l ${{ github.workspace }}/com.ur.thph.modbus_urcap/pom.xml
